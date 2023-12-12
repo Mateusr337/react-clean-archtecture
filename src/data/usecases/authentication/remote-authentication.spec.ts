@@ -41,10 +41,10 @@ describe("Remote Authentication", () => {
     expect(httpPostClientSpy.body).toEqual(mockAuthParams);
   });
 
-  test("Should throw InvalidCredentialsError if HttpPostClient returns unathorized-401", async () => {
+  test("Should throw InvalidCredentialsError if HttpPostClient returns unauthorized-401", async () => {
     const { sut, httpPostClientSpy } = makeSut();
     httpPostClientSpy.response = {
-      statusCode: HttpStatusCode.unathorized,
+      statusCode: HttpStatusCode.unauthorized,
       status: false,
     };
     const promise = sut.auth(mockAuthentication());
