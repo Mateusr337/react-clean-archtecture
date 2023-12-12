@@ -5,6 +5,7 @@ import { InternalServerError } from "@/domain/errors/internal-server-error";
 import { InvalidCredentialsError } from "@/domain/errors/invalid-credential-error";
 import { NotFoundError } from "@/domain/errors/not-found-error";
 import { AccountModel } from "@/domain/models/account-model";
+import { mockAccountModel } from "@/domain/tests/mock-account";
 import { mockAuthentication } from "@/domain/tests/mock-authentication";
 import { AuthenticationParams } from "@/domain/usecases/authentication";
 import { faker } from "@faker-js/faker";
@@ -77,5 +78,18 @@ describe("Remote Authentication", () => {
     };
     const promise = sut.auth(mockAuthentication());
     expect(promise).rejects.toThrow(new NotFoundError());
+  });
+
+  test("Should return AccountModel if HttpPostClient returns ok-200", async () => {
+    const { sut, httpPostClientSpy } = makeSut();
+    const httpResult = mockAccountModel();
+
+    httpPostClientSpy.response = {
+      statusCode: HttpStatusCode.ok,
+      status: true,
+      body: httpResult,
+    };
+    const response = await sut.auth(mockAuthentication());
+    expect(response).toEqual(httpResult);
   });
 });
