@@ -4,12 +4,16 @@ import { BadRequestError } from "@/domain/errors/bad-request-error";
 import { InternalServerError } from "@/domain/errors/internal-server-error";
 import { InvalidCredentialsError } from "@/domain/errors/invalid-credential-error";
 import { NotFoundError } from "@/domain/errors/not-found-error";
+import { AccountModel } from "@/domain/models/account-model";
 import { AuthenticationParams } from "@/domain/usecases/authentication";
 
 export class RemoteAuthentication {
   constructor(
     private readonly url: string,
-    private readonly httpPostClient: HttpPostClient
+    private readonly httpPostClient: HttpPostClient<
+      AuthenticationParams,
+      AccountModel
+    >
   ) {}
 
   async auth(params: AuthenticationParams): Promise<void> {
@@ -17,6 +21,7 @@ export class RemoteAuthentication {
       url: this.url,
       body: params,
     });
+
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok:
         break;
