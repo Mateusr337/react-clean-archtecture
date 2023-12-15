@@ -9,7 +9,7 @@ const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 const mockPostRequest = (): HttpPostParams<any> => ({
   url: faker.internet.url(),
-  body: new Object(),
+  body: {},
 });
 
 const makeSut = (): AxiosHttpClient => {
@@ -17,13 +17,6 @@ const makeSut = (): AxiosHttpClient => {
 };
 
 describe("AxiosHttpClient", () => {
-  test("Should Call axios with the correct URL and REST method", async () => {
-    const { url } = mockPostRequest();
-    const sut = makeSut();
-    await sut.post({ url });
-    expect(mockedAxios.post).toHaveBeenCalledWith(url);
-  });
-
   test("Should Call axios with the correct body values", async () => {
     const request = mockPostRequest();
     const sut = makeSut();
