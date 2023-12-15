@@ -3,9 +3,9 @@ export default {
   collectCoverageFrom: ["<rootDir>/src/**/*.{ts, tsx}"],
   clearMocks: true,
   coverageDirectory: "coverage",
-  testEnvironment: "node",
+  testEnvironment: "jsdom",
   transform: {
-    ".+\\.ts$": "ts-jest",
+    ".+\\.(ts|tsx)$": "ts-jest",
   },
   moduleNameMapper: {
     "@/(.*)": "<rootDir>/src/$1",
