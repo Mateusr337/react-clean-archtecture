@@ -12,7 +12,6 @@ export class HttpPostClientSpy<ReqBody, ResBody>
   body?: ReqBody;
   response: HttpResponse<ResBody> = {
     statusCode: HttpStatusCode.ok,
-    status: true,
   };
 
   async post({

@@ -45,7 +45,6 @@ describe("Remote Authentication", () => {
     const { sut, httpPostClientSpy } = makeSut();
     httpPostClientSpy.response = {
       statusCode: HttpStatusCode.unauthorized,
-      status: false,
     };
     const promise = sut.auth(mockAuthentication());
     expect(promise).rejects.toThrow(new InvalidCredentialsError());
@@ -55,7 +54,6 @@ describe("Remote Authentication", () => {
     const { sut, httpPostClientSpy } = makeSut();
     httpPostClientSpy.response = {
       statusCode: HttpStatusCode.badRequest,
-      status: false,
     };
     const promise = sut.auth(mockAuthentication());
     expect(promise).rejects.toThrow(new BadRequestError());
@@ -65,7 +63,6 @@ describe("Remote Authentication", () => {
     const { sut, httpPostClientSpy } = makeSut();
     httpPostClientSpy.response = {
       statusCode: HttpStatusCode.internal,
-      status: false,
     };
     const promise = sut.auth(mockAuthentication());
     expect(promise).rejects.toThrow(new InternalServerError());
@@ -75,7 +72,6 @@ describe("Remote Authentication", () => {
     const { sut, httpPostClientSpy } = makeSut();
     httpPostClientSpy.response = {
       statusCode: HttpStatusCode.notFound,
-      status: false,
     };
     const promise = sut.auth(mockAuthentication());
     expect(promise).rejects.toThrow(new NotFoundError());
@@ -87,7 +83,6 @@ describe("Remote Authentication", () => {
 
     httpPostClientSpy.response = {
       statusCode: HttpStatusCode.ok,
-      status: true,
       body: httpResult,
     };
     const response = await sut.auth(mockAuthentication());
