@@ -24,10 +24,10 @@ describe("AxiosHttpClient", () => {
     expect(mockedAxios.post).toHaveBeenCalledWith(url);
   });
 
-  //   test("Should Call axios with the correct body", async () => {
-  //     const request = mockPostRequest();
-  //     const sut = makeSut();
-  //     await sut.post({ url: faker.internet.url() });
-  //     expect(mockedAxios.post).toHaveBeenCalledWith(url);
-  //   });
+  test("Should Call axios with the correct body values", async () => {
+    const request = mockPostRequest();
+    const sut = makeSut();
+    await sut.post(request);
+    expect(mockedAxios.post).toHaveBeenCalledWith(request.url, request.body);
+  });
 });
