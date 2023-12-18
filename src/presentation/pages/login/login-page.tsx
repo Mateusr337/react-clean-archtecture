@@ -1,6 +1,9 @@
-import StandartButton from "@/presentation/components/button/standart-button-component/standart-button-component";
-import TextButton from "@/presentation/components/button/text-button-component/text-button-component";
-import InputText from "@/presentation/components/input/input-text/input-text-component";
+import {
+  Form,
+  InputText,
+  StandartButton,
+  TextButton,
+} from "@/presentation/components";
 import React from "react";
 import { Container, ContentPage, Footer, Header } from "./login-styles";
 
@@ -11,8 +14,7 @@ export default function LoginPage(): React.ReactElement {
         <h1>4Ds</h1>
       </Header>
       <ContentPage>
-        <form>
-          <h2>Login</h2>
+        <Form title='Login'>
           <InputText
             type='email'
             name='email'
@@ -25,7 +27,7 @@ export default function LoginPage(): React.ReactElement {
           />
           <StandartButton>Entrar</StandartButton>
           <TextButton>Criar conta</TextButton>
-        </form>
+        </Form>
       </ContentPage>
       <Footer></Footer>
     </Container>
