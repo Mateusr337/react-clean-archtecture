@@ -2,6 +2,7 @@ import { AppColors } from "@/domain/colors";
 import styled from "styled-components";
 
 export const Input = styled.input`
+  width: 100%;
   border: 1px solid ${AppColors.primaryLight};
   line-height: 40px;
   border-radius: 4px;

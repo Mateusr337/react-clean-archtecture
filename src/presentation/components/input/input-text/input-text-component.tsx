@@ -1,5 +1,6 @@
 import React from "react";
-import { ErrorMessage } from "../global-inputs-styles";
+import SmallMessage from "../../small-message/small-message-component";
+import { InputContainer } from "../global-inputs-styles";
 import { Input } from "./input-text-styles";
 
 interface InputParams {
@@ -11,9 +12,9 @@ interface InputParams {
 
 export default function InputText(params: InputParams): React.ReactElement {
   return (
-    <>
+    <InputContainer>
       <Input {...params} />
-      {!!params.error && <ErrorMessage>{params.error}</ErrorMessage>}
-    </>
+      {params.error && <SmallMessage> {`Erro: ${params.error}`} </SmallMessage>}
+    </InputContainer>
   );
 }
