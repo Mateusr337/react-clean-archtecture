@@ -1,6 +1,7 @@
 import {
   Form,
   InputText,
+  Spinner,
   StandartButton,
   TextButton,
 } from "@/presentation/components";
@@ -27,6 +28,7 @@ export default function LoginPage(): React.ReactElement {
           />
           <StandartButton>Entrar</StandartButton>
           <TextButton>Criar conta</TextButton>
+          <Spinner />
         </Form>
       </ContentPage>
       <Footer></Footer>

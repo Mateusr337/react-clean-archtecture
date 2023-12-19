@@ -17,12 +17,15 @@
     "axios": "^1.6.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-loader-spinner": "^6.1.1-0",
+    "react-router-dom": "^6.21.0",
     "styled-components": "^6.1.1"
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.17",
+    "@types/react-router-dom": "^5.3.3",
     "@types/supertest": "^2.0.16",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
     "@typescript-eslint/parser": "^6.10.0",
