@@ -13,3 +13,9 @@ export const ContentPage = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+export const ButtonsBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;

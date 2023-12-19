@@ -15,7 +15,14 @@ export const Container = styled.button`
   background-color: ${AppColors.primaryDark};
 
   &:hover {
-    opacity: 0.85;
+    opacity: 0.9;
     cursor: pointer;
+  }
+
+  &:disabled {
+    background-color: gray;
+    color: #ffffff;
+    opacity: 1 !important;
+    cursor: inherit;
   }
 `;
