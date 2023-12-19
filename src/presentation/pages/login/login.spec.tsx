@@ -7,4 +7,10 @@ describe("Login component", () => {
     const component = getByTestId("form-states");
     expect(component.childElementCount).toBe(0);
   });
+
+  test("Shouldn't render acvated submit button", async () => {
+    const { getByTestId } = render(<LoginPage />);
+    const button = getByTestId("submit-btn") as HTMLButtonElement;
+    expect(button.disabled).toBe(true);
+  });
 });
