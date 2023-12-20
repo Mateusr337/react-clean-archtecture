@@ -5,16 +5,20 @@ import {
   StandartButton,
   TextButton,
 } from "@/presentation/components";
-import { FormContext, FormStates } from "@/presentation/contexts";
 import React, { useState } from "react";
 import { Footer, Header } from "./components";
+import { FormContext, FormStates } from "./contexts";
 import { ButtonsBox, Container, ContentPage } from "./login-styles";
 
+const initialFormState: FormStates = {
+  isLoading: false,
+  error: null,
+  emailError: null,
+  passwordError: null,
+};
+
 export default function LoginPage(): React.ReactElement {
-  const [state] = useState<FormStates>({
-    isLoading: false,
-    error: null,
-  });
+  const [state] = useState<FormStates>(initialFormState);
 
   return (
     <Container>
