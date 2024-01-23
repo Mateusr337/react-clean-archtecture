@@ -7,6 +7,7 @@ import {
   render,
 } from "@testing-library/react";
 import { LoginPage } from "..";
+import { LoginMessages } from "./login-messages";
 
 type SutTypes = {
   sut: RenderResult;
@@ -18,6 +19,8 @@ const makeSut = (): SutTypes => {
   const sut = render(<LoginPage validation={validationSpy} />);
   return { sut, validationSpy };
 };
+
+const messages = LoginMessages;
 
 describe("LoginPage component", () => {
   afterEach(cleanup);
@@ -50,5 +53,14 @@ describe("LoginPage component", () => {
     fireEvent.input(inputPassword, { target: { value: password } });
     expect(validationSpy.fieldName).toBe(inputPassword.name);
     expect(validationSpy.fieldValue).toBe(password);
+  });
+
+  test("Should show email error if Validation fails", async () => {
+    const { sut, validationSpy } = makeSut();
+    validationSpy.errorMessage = messages.EmailNotValid;
+    const inputEmail = sut.getByTestId("input-email") as HTMLInputElement;
+    fireEvent.input(inputEmail, { target: { value: faker.internet.email() } });
+    const emailError = sut.getByTestId("email-small-error") as HTMLSpanElement;
+    expect(emailError.textContent).toBe(validationSpy.errorMessage);
   });
 });
