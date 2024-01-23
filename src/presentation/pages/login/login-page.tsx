@@ -20,12 +20,14 @@ const initialFormState: FormStates = {
 export default function LoginPage(): React.ReactElement {
   const [state] = useState<FormStates>(initialFormState);
 
+  const onSubmit = () => {};
+
   return (
     <Container>
       <Header />
       <ContentPage>
         <FormContext.Provider value={state}>
-          <Form title='Login'>
+          <Form title='Login' onSubmit={onSubmit}>
             <InputText
               type='email'
               name='email'

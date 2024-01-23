@@ -1,16 +1,25 @@
-import { render } from "@testing-library/react";
+import { RenderResult, render } from "@testing-library/react";
 import { LoginPage } from "..";
+
+type SutTypes = {
+  sut: RenderResult;
+};
+
+const makeSut = (): SutTypes => {
+  const sut = render(<LoginPage />);
+  return { sut };
+};
 
 describe("Login component", () => {
   test("Spinner and error shouldn't render on start", async () => {
-    const { getByTestId } = render(<LoginPage />);
-    const component = getByTestId("form-states");
+    const { sut } = makeSut();
+    const component = sut.getByTestId("form-states");
     expect(component.childElementCount).toBe(0);
   });
 
   test("Submit button should starts disabled", async () => {
-    const { getByTestId } = render(<LoginPage />);
-    const button = getByTestId("submit-btn") as HTMLButtonElement;
+    const { sut } = makeSut();
+    const button = sut.getByTestId("submit-btn") as HTMLButtonElement;
     expect(button.disabled).toBe(true);
   });
 });
