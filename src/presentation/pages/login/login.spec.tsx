@@ -19,7 +19,7 @@ const makeSut = (): SutTypes => {
   return { sut, validationSpy };
 };
 
-describe("Login component", () => {
+describe("LoginPage component", () => {
   afterEach(cleanup);
 
   test("Spinner and error shouldn't render on start", async () => {
