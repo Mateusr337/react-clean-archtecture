@@ -4,16 +4,18 @@ import SmallMessage from "../../small-message/small-message-component";
 import { InputContainer } from "../global-inputs-styles";
 import { Input } from "./input-text-styles";
 
-interface InputParams {
+interface Params {
   name: string;
   type?: "text" | "password" | "email";
   placeholder?: string;
   required?: boolean;
 }
 
-export default function InputText(params: InputParams): React.ReactElement {
+export default function InputText(params: Params): React.ReactElement {
+  const { name } = params;
+
   const { state, setState } = useContext(FormContext);
-  const error = state[`${params.name}Error`];
+  const error = state[`${name}Error`];
 
   const requiredValue = params.required == false ? false : true;
 
@@ -34,11 +36,11 @@ export default function InputText(params: InputParams): React.ReactElement {
         {...params}
         readOnly
         required={requiredValue}
-        data-testid={`input-${params.name}`}
+        data-testid={`input-${name}`}
         onFocus={enableInput}
         onChange={handleChange}
       />
-      {error && <SmallMessage> {`Erro: ${error}`} </SmallMessage>}
+      {error && <SmallMessage name={name}>{`${error}`}</SmallMessage>}
     </InputContainer>
   );
 }

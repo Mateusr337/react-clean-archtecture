@@ -15,24 +15,30 @@ type Params = {
   validation?: Validation;
 };
 
-export const emptyFormStates: FormStates = {
+const emptyFormStates: FormStates = {
   isLoading: false,
   error: null,
   email: "",
-  emailError: null,
+  emailError: "",
   password: "",
-  passwordError: null,
+  passwordError: "",
 };
 
 export default function LoginPage({ validation }: Params): React.ReactElement {
   const [state, setState] = useState<FormStates>(emptyFormStates);
 
   useEffect(() => {
-    validation?.validate("email", state.email);
+    setState({
+      ...state,
+      emailError: validation?.validate("email", state.email),
+    });
   }, [state.email]);
 
   useEffect(() => {
-    validation?.validate("password", state.password);
+    setState({
+      ...state,
+      passwordError: validation?.validate("password", state.password),
+    });
   }, [state.password]);
 
   return (
