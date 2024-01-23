@@ -1,4 +1,4 @@
-import { Validation } from "@/presentation/protocols/validation";
+import { ValidationSpy } from "@/presentation/test";
 import { faker } from "@faker-js/faker";
 import {
   RenderResult,
@@ -12,19 +12,6 @@ type SutTypes = {
   sut: RenderResult;
   validationSpy: ValidationSpy;
 };
-
-class ValidationSpy implements Validation {
-  errorMessage: string;
-  input: object;
-  fieldName: string;
-  fieldValue: string;
-
-  validate(fieldName: string, fieldValue: string): string {
-    this.fieldName = fieldName;
-    this.fieldValue = fieldValue;
-    return this.errorMessage;
-  }
-}
 
 const makeSut = (): SutTypes => {
   const validationSpy = new ValidationSpy();

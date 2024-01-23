@@ -5,7 +5,7 @@ import {
   StandartButton,
   TextButton,
 } from "@/presentation/components";
-import { Validation } from "@/presentation/protocols/validation";
+import { Validation } from "@/presentation/protocols";
 import React, { useEffect, useState } from "react";
 import { Footer, Header } from "./components";
 import { FormContext, FormStates } from "./contexts";
