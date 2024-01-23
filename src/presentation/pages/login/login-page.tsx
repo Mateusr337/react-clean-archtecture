@@ -5,29 +5,42 @@ import {
   StandartButton,
   TextButton,
 } from "@/presentation/components";
-import React, { useState } from "react";
+import { Validation } from "@/presentation/protocols/validation";
+import React, { useEffect, useState } from "react";
 import { Footer, Header } from "./components";
 import { FormContext, FormStates } from "./contexts";
 import { ButtonsBox, Container, ContentPage } from "./login-styles";
 
-const initialFormState: FormStates = {
+type Params = {
+  validation: Validation;
+};
+
+export const emptyFormStates: FormStates = {
   isLoading: false,
   error: null,
+  email: "",
   emailError: null,
+  password: "",
   passwordError: null,
 };
 
-export default function LoginPage(): React.ReactElement {
-  const [state] = useState<FormStates>(initialFormState);
+export default function LoginPage({ validation }: Params): React.ReactElement {
+  const [state, setState] = useState<FormStates>(emptyFormStates);
 
-  const onSubmit = () => {};
+  useEffect(() => {
+    validation.validate({ email: state.email });
+  }, [state.email]);
+
+  useEffect(() => {
+    validation.validate({ password: state.password });
+  }, [state.password]);
 
   return (
     <Container>
       <Header />
       <ContentPage>
-        <FormContext.Provider value={state}>
-          <Form title='Login' onSubmit={onSubmit}>
+        <FormContext.Provider value={{ state, setState }}>
+          <Form title='Login'>
             <InputText
               type='email'
               name='email'

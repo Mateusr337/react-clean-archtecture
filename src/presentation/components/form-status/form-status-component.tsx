@@ -4,7 +4,8 @@ import { SmallMessage, Spinner } from "..";
 import { Container } from "./form-status-styles";
 
 export default function FormStatus(): React.ReactElement {
-  const { isLoading, error } = useContext(FormContext);
+  const { state } = useContext(FormContext);
+  const { isLoading, error } = state;
 
   return (
     <Container data-testid='form-states'>
