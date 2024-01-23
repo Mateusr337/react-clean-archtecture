@@ -17,6 +17,10 @@ export default function InputText(params: InputParams): React.ReactElement {
 
   const requiredValue = params.required == false ? false : true;
 
+  const enableInput = (event: FocusEvent<HTMLInputElement>): void => {
+    event.target.readOnly = false;
+  };
+
   const handleChange = (event: FocusEvent<HTMLInputElement>): void => {
     setState({
       ...state,
@@ -28,8 +32,10 @@ export default function InputText(params: InputParams): React.ReactElement {
     <InputContainer>
       <Input
         {...params}
+        readOnly
         required={requiredValue}
         data-testid={`input-${params.name}`}
+        onFocus={enableInput}
         onChange={handleChange}
       />
       {error && <SmallMessage> {`Erro: ${error}`} </SmallMessage>}
