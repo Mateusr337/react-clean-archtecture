@@ -28,11 +28,11 @@ export default function LoginPage({ validation }: Params): React.ReactElement {
   const [state, setState] = useState<FormStates>(emptyFormStates);
 
   useEffect(() => {
-    validation?.validate({ email: state.email });
+    validation?.validate("email", state.email);
   }, [state.email]);
 
   useEffect(() => {
-    validation?.validate({ password: state.password });
+    validation?.validate("password", state.password);
   }, [state.password]);
 
   return (

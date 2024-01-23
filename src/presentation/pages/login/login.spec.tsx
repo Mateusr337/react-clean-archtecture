@@ -16,9 +16,12 @@ type SutTypes = {
 class ValidationSpy implements Validation {
   errorMessage: string;
   input: object;
+  fieldName: string;
+  fieldValue: string;
 
-  validate(input: object): string {
-    this.input = input;
+  validate(fieldName: string, fieldValue: string): string {
+    this.fieldName = fieldName;
+    this.fieldValue = fieldValue;
     return this.errorMessage;
   }
 }
@@ -44,19 +47,21 @@ describe("Login component", () => {
     expect(button.disabled).toBe(true);
   });
 
-  test("Shoukd call Validation with correct email", async () => {
+  test("Shoud call Validation with correct email", async () => {
     const { sut, validationSpy } = makeSut();
     const email = faker.internet.email();
     const inputEmail = sut.getByTestId("input-email") as HTMLInputElement;
     fireEvent.input(inputEmail, { target: { value: email } });
-    expect(validationSpy.input).toEqual({ email: email });
+    expect(validationSpy.fieldName).toBe(inputEmail.name);
+    expect(validationSpy.fieldValue).toBe(email);
   });
 
-  test("Shoukd call Validation with correct password", async () => {
+  test("Should call Validation with correct password", async () => {
     const { sut, validationSpy } = makeSut();
     const password = faker.internet.password();
     const inputPassword = sut.getByTestId("input-password") as HTMLInputElement;
     fireEvent.input(inputPassword, { target: { value: password } });
-    expect(validationSpy.input).toEqual({ password: password });
+    expect(validationSpy.fieldName).toBe(inputPassword.name);
+    expect(validationSpy.fieldValue).toBe(password);
   });
 });
