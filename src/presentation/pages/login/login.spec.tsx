@@ -63,4 +63,15 @@ describe("LoginPage component", () => {
     const emailError = sut.getByTestId("email-small-error") as HTMLSpanElement;
     expect(emailError.textContent).toBe(validationSpy.errorMessage);
   });
+
+  test("Should show password error if Validation fails", async () => {
+    const { sut, validationSpy } = makeSut();
+    validationSpy.errorMessage = messages.PasswordNotValid;
+    const inputPassword = sut.getByTestId("input-password") as HTMLInputElement;
+    const password = faker.internet.password();
+    fireEvent.input(inputPassword, { target: { value: password } });
+    const paswwordErrorId = "password-small-error";
+    const passwordError = sut.getByTestId(paswwordErrorId) as HTMLSpanElement;
+    expect(passwordError.textContent).toBe(validationSpy.errorMessage);
+  });
 });
