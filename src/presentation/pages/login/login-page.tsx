@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   Form,
   FormStatus,
@@ -6,13 +7,14 @@ import {
   TextButton,
 } from "@/presentation/components";
 import { Validation } from "@/presentation/protocols";
-import React, { useEffect, useState } from "react";
+import { Authentication } from "@/domain/usecases";
 import { Footer, Header } from "./components";
 import { FormContext, FormStates } from "./contexts";
 import { ButtonsBox, Container, ContentPage } from "./login-styles";
 
 type Params = {
-  validation?: Validation;
+  validation: Validation;
+  authentication: Authentication;
 };
 
 const emptyFormStates: FormStates = {
@@ -24,7 +26,10 @@ const emptyFormStates: FormStates = {
   passwordError: "",
 };
 
-export default function LoginPage({ validation }: Params): React.ReactElement {
+export default function LoginPage({
+  validation,
+  authentication,
+}: Params): React.ReactElement {
   const [state, setState] = useState<FormStates>(emptyFormStates);
 
   useEffect(() => {
@@ -41,9 +46,11 @@ export default function LoginPage({ validation }: Params): React.ReactElement {
     });
   }, [state.password]);
 
-  const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setState({ ...state, isLoading: true });
+    const { email, password } = state;
+    await authentication.auth({ email, password });
   };
 
   return (
