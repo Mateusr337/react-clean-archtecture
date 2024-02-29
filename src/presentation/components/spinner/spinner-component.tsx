@@ -5,10 +5,11 @@ import { Circles } from "react-loader-spinner";
 export default function Spinner(): React.ReactElement {
   return (
     <Circles
-      height='50'
-      width='50'
+      data-testid="spinner"
+      height="50"
+      width="50"
       color={AppColors.primaryLight}
-      ariaLabel='loading'
+      ariaLabel="loading"
     />
   );
 }

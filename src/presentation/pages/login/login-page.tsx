@@ -41,12 +41,17 @@ export default function LoginPage({ validation }: Params): React.ReactElement {
     });
   }, [state.password]);
 
+  const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setState({ ...state, isLoading: true });
+  };
+
   return (
     <Container>
       <Header />
       <ContentPage>
         <FormContext.Provider value={{ state, setState }}>
-          <Form title="Login">
+          <Form title="Login" onSubmit={handleSubmitForm}>
             <InputText
               type="email"
               name="email"
