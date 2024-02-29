@@ -46,20 +46,28 @@ export default function LoginPage({ validation }: Params): React.ReactElement {
       <Header />
       <ContentPage>
         <FormContext.Provider value={{ state, setState }}>
-          <Form title='Login'>
+          <Form title="Login">
             <InputText
-              type='email'
-              name='email'
-              placeholder='Digite seu e-mail'
+              type="email"
+              name="email"
+              placeholder="Digite seu e-mail"
             />
             <InputText
-              type='password'
-              name='password'
-              placeholder='Digite sua senha'
+              type="password"
+              name="password"
+              placeholder="Digite sua senha"
             />
             <ButtonsBox>
               <TextButton>Cadastrar-me</TextButton>
-              <StandartButton disabled type='submit'>
+              <StandartButton
+                disabled={
+                  !!state.emailError ||
+                  !!state.passwordError ||
+                  !state.email ||
+                  !state.password
+                }
+                type="submit"
+              >
                 Entrar
               </StandartButton>
             </ButtonsBox>

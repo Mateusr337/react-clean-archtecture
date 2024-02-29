@@ -74,4 +74,20 @@ describe("LoginPage component", () => {
     const passwordError = sut.getByTestId(paswwordErrorId) as HTMLSpanElement;
     expect(passwordError.textContent).toBe(validationSpy.errorMessage);
   });
+
+  test("Should enable submit button if form is valid", async () => {
+    const { sut, validationSpy } = makeSut();
+    validationSpy.errorMessage = null;
+
+    const inputPassword = sut.getByTestId("input-password") as HTMLInputElement;
+    const password = faker.internet.password();
+    fireEvent.input(inputPassword, { target: { value: password } });
+
+    const inputEmail = sut.getByTestId("input-email") as HTMLInputElement;
+    const email = faker.internet.email();
+    fireEvent.input(inputEmail, { target: { value: email } });
+
+    const button = sut.getByTestId("submit-btn") as HTMLButtonElement;
+    expect(button.disabled).toBe(false);
+  });
 });
