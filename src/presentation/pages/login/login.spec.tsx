@@ -15,6 +15,8 @@ type SutTypes = {
   authenticationSpy: AuthenticationSpy;
 };
 
+const messages = LoginMessages;
+
 const makeSut = (): SutTypes => {
   const validationSpy = new ValidationSpy();
   const authenticationSpy = new AuthenticationSpy();
@@ -24,7 +26,32 @@ const makeSut = (): SutTypes => {
   return { sut, validationSpy, authenticationSpy };
 };
 
-const messages = LoginMessages;
+const simulateValidFormSubmit = (
+  sut: RenderResult,
+  email: string = faker.internet.email(),
+  password: string = faker.internet.password()
+): void => {
+  populateEmailField(sut, email);
+  populatePasswordField(sut, password);
+  const button = sut.getByTestId("submit-btn") as HTMLButtonElement;
+  fireEvent.click(button);
+};
+
+const populateEmailField = (
+  sut: RenderResult,
+  email: string = faker.internet.email()
+) => {
+  const inputEmail = sut.getByTestId("input-email") as HTMLInputElement;
+  fireEvent.input(inputEmail, { target: { value: email } });
+};
+
+const populatePasswordField = (
+  sut: RenderResult,
+  password: string = faker.internet.password()
+) => {
+  const inputPassword = sut.getByTestId("input-password") as HTMLInputElement;
+  fireEvent.input(inputPassword, { target: { value: password } });
+};
 
 describe("LoginPage component", () => {
   afterEach(cleanup);
@@ -62,18 +89,15 @@ describe("LoginPage component", () => {
   test("Should show email error if Validation fails", async () => {
     const { sut, validationSpy } = makeSut();
     validationSpy.errorMessage = messages.EmailNotValid;
-    const inputEmail = sut.getByTestId("input-email") as HTMLInputElement;
-    fireEvent.input(inputEmail, { target: { value: faker.internet.email() } });
+    populateEmailField(sut);
     const emailError = sut.getByTestId("email-small-error") as HTMLSpanElement;
     expect(emailError.textContent).toBe(validationSpy.errorMessage);
   });
 
   test("Should show password error if Validation fails", async () => {
     const { sut, validationSpy } = makeSut();
-    const password = faker.internet.password();
     validationSpy.errorMessage = messages.PasswordNotValid;
-    const inputPassword = sut.getByTestId("input-password") as HTMLInputElement;
-    fireEvent.input(inputPassword, { target: { value: password } });
+    populatePasswordField(sut);
     const paswwordErrorId = "password-small-error";
     const passwordError = sut.getByTestId(paswwordErrorId) as HTMLSpanElement;
     expect(passwordError.textContent).toBe(validationSpy.errorMessage);
@@ -81,42 +105,23 @@ describe("LoginPage component", () => {
 
   test("Should enable submit button if form is valid", async () => {
     const { sut } = makeSut();
-    const email = faker.internet.email();
-    const password = faker.internet.password();
-    const inputPassword = sut.getByTestId("input-password") as HTMLInputElement;
-    fireEvent.input(inputPassword, { target: { value: password } });
-    const inputEmail = sut.getByTestId("input-email") as HTMLInputElement;
-    fireEvent.input(inputEmail, { target: { value: email } });
+    simulateValidFormSubmit(sut);
     const button = sut.getByTestId("submit-btn") as HTMLButtonElement;
     expect(button.disabled).toBe(false);
   });
 
   test("Should show spinner on submit", async () => {
     const { sut } = makeSut();
-    const email = faker.internet.email();
-    const password = faker.internet.password();
-    const inputPassword = sut.getByTestId("input-password") as HTMLInputElement;
-    fireEvent.input(inputPassword, { target: { value: password } });
-    const inputEmail = sut.getByTestId("input-email") as HTMLInputElement;
-    fireEvent.input(inputEmail, { target: { value: email } });
-    const button = sut.getByTestId("submit-btn") as HTMLButtonElement;
-    fireEvent.click(button);
+    simulateValidFormSubmit(sut);
     const spinner = sut.getByTestId("circles-loading");
     expect(spinner).toBeTruthy();
   });
 
   test("Should call Authentication with correct values", async () => {
     const { sut, authenticationSpy } = makeSut();
-    const inputPassword = sut.getByTestId("input-password") as HTMLInputElement;
-    const password = faker.internet.password();
-    fireEvent.input(inputPassword, { target: { value: password } });
-
-    const inputEmail = sut.getByTestId("input-email") as HTMLInputElement;
     const email = faker.internet.email();
-    fireEvent.input(inputEmail, { target: { value: email } });
-
-    const button = sut.getByTestId("submit-btn") as HTMLButtonElement;
-    fireEvent.click(button);
+    const password = faker.internet.password();
+    simulateValidFormSubmit(sut, email, password);
     expect(authenticationSpy.params).toEqual({ email, password });
   });
 });
