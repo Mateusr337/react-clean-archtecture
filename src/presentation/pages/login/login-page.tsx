@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { Authentication } from "@/domain/usecases";
 import {
   Form,
   FormStatus,
@@ -7,7 +7,7 @@ import {
   TextButton,
 } from "@/presentation/components";
 import { Validation } from "@/presentation/protocols";
-import { Authentication } from "@/domain/usecases";
+import React, { useEffect, useState } from "react";
 import { Footer, Header } from "./components";
 import { FormContext, FormStates } from "./contexts";
 import { ButtonsBox, Container, ContentPage } from "./login-styles";
@@ -48,6 +48,7 @@ export default function LoginPage({
 
   const handleSubmitForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (state.isLoading) return;
     setState({ ...state, isLoading: true });
     const { email, password } = state;
     await authentication.auth({ email, password });

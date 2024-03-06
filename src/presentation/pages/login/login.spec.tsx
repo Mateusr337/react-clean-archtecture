@@ -124,4 +124,11 @@ describe("LoginPage component", () => {
     simulateValidFormSubmit(sut, email, password);
     expect(authenticationSpy.params).toEqual({ email, password });
   });
+
+  test("Should call Authentication only once", async () => {
+    const { sut, authenticationSpy } = makeSut();
+    simulateValidFormSubmit(sut);
+    simulateValidFormSubmit(sut);
+    expect(authenticationSpy.callsCount).toBe(1);
+  });
 });
