@@ -48,7 +48,14 @@ export default function LoginPage({
 
   const handleSubmitForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (state.isLoading) return;
+    if (
+      state.isLoading ||
+      state.error ||
+      state.emailError ||
+      state.passwordError
+    ) {
+      return;
+    }
     setState({ ...state, isLoading: true });
     const { email, password } = state;
     await authentication.auth({ email, password });
@@ -59,7 +66,7 @@ export default function LoginPage({
       <Header />
       <ContentPage>
         <FormContext.Provider value={{ state, setState }}>
-          <Form title="Login" onSubmit={handleSubmitForm}>
+          <Form testId="login-form" title="Login" onSubmit={handleSubmitForm}>
             <InputText
               type="email"
               name="email"
