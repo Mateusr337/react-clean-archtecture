@@ -58,7 +58,8 @@ export default function LoginPage({
     }
     setState({ ...state, isLoading: true });
     const { email, password } = state;
-    await authentication.auth({ email, password });
+    const account = await authentication.auth({ email, password });
+    localStorage.setItem("accessToken", account.accessToken);
   };
 
   return (

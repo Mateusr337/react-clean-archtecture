@@ -5,9 +5,11 @@ import {
   cleanup,
   fireEvent,
   render,
+  waitFor,
 } from "@testing-library/react";
 import { LoginPage } from "..";
 import { LoginMessages } from "./login-messages";
+import "jest-localstorage-mock";
 
 type SutTypes = {
   sut: RenderResult;
@@ -55,6 +57,10 @@ const populatePasswordField = (
 
 describe("LoginPage component", () => {
   afterEach(cleanup);
+
+  beforeEach(() => {
+    localStorage.clear();
+  });
 
   test("Spinner and error shouldn't render on start", async () => {
     const { sut } = makeSut();
@@ -130,5 +136,15 @@ describe("LoginPage component", () => {
     simulateValidFormSubmit(sut);
     simulateValidFormSubmit(sut);
     expect(authenticationSpy.callsCount).toBe(1);
+  });
+
+  test("Should save accessToken inside localstorage when success authentication", async () => {
+    const { sut, authenticationSpy } = makeSut();
+    simulateValidFormSubmit(sut);
+    await waitFor(() => sut.getByTestId("login-form"));
+    expect(localStorage.setItem).toHaveBeenCalledWith(
+      "accessToken",
+      authenticationSpy.account.accessToken
+    );
   });
 });
